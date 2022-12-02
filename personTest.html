@@ -1,0 +1,249 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            margin-bottom: 100px;
+        }
+
+        p:first-child {
+            color: green;
+        }
+
+        p:last-child {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <a href="#beforeHW">Ödev Öncesi</a>
+        <a href="#afterHW">Ödev</a>
+    </div>
+<section id="beforeHW">
+    <h3>Ödev Öncesi</h3>
+
+    <div>
+        <p>Kişi listesi oluşturalım kişileri listeleyelim</p>
+        <p id="personList"></p>
+    </div>
+    <div>
+        <p>kişi listesine kişi ekleyelim kişileri listeleyelim</p>
+        <input type="text" id="ekle">
+        <button onclick="add()">Ekle</button>
+        <p id="personListAdd"></p>
+    </div>
+    <div>
+        <p>son eklenen kişiyi silelim kişileri listeleyelim</p>
+        <button onclick="remove()">Çıkar</button>
+        <p id="personListRemove"></p>
+    </div>
+    <div>
+        <p>En yaşlı kişinin adını yazdıralım</p>
+        <p id="oldPersonName"></p>
+    </div>
+    <div>
+        <p>en genç kişi adını yazdıralım</p>
+        <p id="youngPersonName"></p>
+    </div>
+    <div>
+        <p>yaşı 18den büyükler listesini yazdıralım</p>
+        <p id="over18List"></p>
+    </div>
+    <div>
+        <p>adında a harfi olanlar listesini yazdıralım</p>
+        <p id="inculedAParamList"></p>
+    </div>
+    <div>
+        <p>geliri 25000 üzeri olanlar listesini yazdıralım</p>
+        <p id="over25000Income"></p>
+    </div>
+    <div>
+        <p>çocuğu olan kişi varmı?</p>
+        <p id="hasChildPerson"></p>
+    </div>
+    <div>
+        <p>çocuğu olmayan kişi varmı?</p>
+        <p id="hasNoChildPerson"></p>
+    </div>
+    <div>
+        <p>kişileri ad sırasına göre listeleyelim</p>
+        <p id="sortByNameList"></p>
+    </div>
+    <div>
+        <p>kişileri en yüksek gelirden düşük gelire doğru listeleyelim</p>
+        <p id="sortByIncomeList"></p>
+    </div>
+</section>
+<section id="afterHW">
+    <h3>Ödev</h3>
+    <div>
+        <p>En Yüksek geliri olan kişiyi aradan silelim</p>
+        <p id="deleteHighestIncome"></p>
+    </div>
+    <div>
+        <p>tüm kişilerin yaşını +1 arttıralım</p>
+        <p id="addAgeOne"></p>
+    </div>
+    <div>
+        <p>tüm kişilerin maaşlarını %20 arttıralım ancak bazı kişilerin gelirleri sıfır buna dikkat edelim sıfır olanlar artmasın</p>
+        <p id="AddIncomePercent"></p>
+    </div>
+    <div>
+        <p>listenin ilk sırasına 5 çocuğu olan bir kişi ekleyelim</p>
+        <p id="AddList5Child"></p>
+    </div>
+    <div>
+        <p>tek çocuklu olan kişinin gelirini %10 iki ve üç çocuklu kişilerin gelirini %20 4 ve daha fazlasını %30 arttıralm</p>
+        <p id="AddIncomePercent2"></p>
+    </div>
+    <div>
+        <p>listeden "en genç kişi" isimli kişiyi adına göre bulup bu kişiye bir tane çocuk ekleyelim</p>
+        <p id="AddYoungest1Child"></p>
+    </div>
+    <div>
+        <p>listede geliri sıfır olan ve yaşı 20 den büyük olan kişileri bulup gelirlerini 100000 yapalım</p>
+        <p id="AddIncometoPoor"></p>
+    </div>
+    <div>
+        <p>listedeki tüm kişilerin gelirlerinin toplamını bulalım</p>
+        <p id="SumOfIncome"></p>
+    </div>
+    <div>
+        <p>listedeki tüm kişilerinin gelirlerinin ortalamasını bulalım</p>
+        <p id="AverageOfIncome"></p>
+    </div>
+
+</section>
+    <script>
+        const persons = [
+            { name: "bbbb", lastName: "aaaa", income: 15000, age: 15, children: [{ name: "aa", lastName: "bbb" }] },
+            { name: "sdfs", lastName: "sdfsd", income: 5000, age: 20, children: [{ name: "addsd", lastName: "bbbjkl" },{ name: "ajkla", lastName: "bbbjkl" }] },
+            { name: "en genç kişi", lastName: "tyutyu", income: 0, age: 12, children: [] },
+            { name: "en yaşlı kişinin adı", lastName: "dgfdg", income: 35000, age: 50, children: [{ name: "akka", lastName: "bkkbb" }] },
+            { name: "askdas", lastName: "jkljk", income: 0, age: 25, children: [] },
+        ];
+
+        /*Ders Kısmı Başlangıcı*/
+        document.getElementById("personList").innerText = persons.map(x => x.name).join(", ");
+
+        
+        function add(){
+
+           persons.push({name:document.getElementById("ekle").value});   
+           document.getElementById("personListAdd").innerText = persons.map(x => x.name).join("\n");
+        }
+
+        function remove(){
+            persons.pop();
+            document.getElementById("personListRemove").innerText = persons.map(x => x.name).join("\n");
+        }
+
+        let arr=persons.sort(function(a,b){return b.age-a.age});
+        document.getElementById("oldPersonName").innerText = arr[0].name+" "+arr[0].lastName+" "+arr[0].income+" "+arr[0].age;
+        document.getElementById("youngPersonName").innerText = arr[arr.length-1].name+" "+arr[arr.length-1].lastName+" "+arr[arr.length-1].income+" "+arr[arr.length-1].age;
+
+
+        let arr2=persons.filter(x=>x.age>18);
+        document.getElementById("over18List").innerText = arr2.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+
+        let arr3=persons.filter(x=>x.name.toLocaleLowerCase().includes("a"));
+        document.getElementById("inculedAParamList").innerText = arr3.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+
+        let arr4=persons.filter(x=>x.income>25000);
+ 
+        document.getElementById("over25000Income").innerText = arr4.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+        //9.soru
+        var hasChild = persons.some(x => x.children.length > 0);
+        document.getElementById("hasChildPerson").innerText = hasChild ? "Evet var" : "Hayır yok";
+
+        //10.soru
+        var hasNoChild = persons.some(x => x.children.length === 0);
+        document.getElementById("hasNoChildPerson").innerText = hasNoChild ? "Var" : "Yok";
+
+       let arr7= persons.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+       document.getElementById("sortByNameList").innerText = arr7.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+
+       let arr8=persons.sort((a,b)=>{return b.income-a.income})
+       document.getElementById("sortByIncomeList").innerText = arr8.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+
+        /*Ders Kısmı Bitişi*/
+
+        /*Ödev Kısmı*/
+        //Ödev1
+        document.getElementById("deleteHighestIncome").innerText = "Önce"+ "\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+        let prev=document.getElementById("deleteHighestIncome").innerText;
+        let arr9=persons.map(a => {return {...a}});
+         arr9=arr9.sort(function(a,b){return a.income-b.income})
+        arr9.pop()
+        document.getElementById("deleteHighestIncome").innerText = prev +"\n \n" +"Sonra"+"\n"+arr9.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+
+        //Ödev2
+        document.getElementById("addAgeOne").innerText = "Önce"+ "\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+        prev=document.getElementById("addAgeOne").innerText;
+        document.getElementById("addAgeOne").innerText = prev +"\n \n" +"Sonra"+"\n"+persons.map(x => x.name+" "+x.lastName+" "+(x.age+=1)+" "+x.income).join("\n");
+
+        //Ödev3
+        document.getElementById("AddIncomePercent").innerText = "Önce"+ "\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+        prev=document.getElementById("AddIncomePercent").innerText;
+        document.getElementById("AddIncomePercent").innerText = prev +"\n \n" +"Sonra"+"\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+(x.income=(x.income+(x.income*0.2)))).join("\n");
+        
+        //Ödev4
+        //Çocukları nasıl yazdıracağıöı bilmiyorum.
+        document.getElementById("AddList5Child").innerText = "Önce"+ "\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income+" "+x.children.toString()).join("\n");
+        prev=document.getElementById("AddList5Child").innerText;
+        persons.push({name:"asda",lastName:"jghjghj",age:24,income:2855,children:[{name:"ghjghj",lastName:"jghjghj"},{name:"sdfsdfsdf",lastName:"wertret"},{name:"cvbcvb",lastName:"jghjghj"},{name:"şlilşil",lastName:"jghjghj"},{name:"ıuouoll",lastName:"jghjghj"}]});
+        [...persons].reverse();
+        document.getElementById("AddList5Child").innerText = prev +"\n \n" +"Sonra"+"\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+(x.income)+" "+x.children.toString()).join("\n");
+
+        //Ödev5
+        document.getElementById("AddIncomePercent2").innerText = "Önce"+ "\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income).join("\n");
+        prev=document.getElementById("AddIncomePercent2").innerText;
+        persons.forEach(x=>{x.children.length>=4?x.income=x.income+(x.income*0.3):x.children.length>=2?x.income=x.income+(x.income*0.2):x.income=x.income+(x.income*0.1)});
+        document.getElementById("AddIncomePercent2").innerText = prev +"\n \n" +"Sonra"+"\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+(x.income)+" "+x.children.toString()).join("\n");
+        
+        //Ödev6
+        document.getElementById("AddYoungest1Child").innerText = "Önce"+ "\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income+" "+x.children.toString()).join("\n");
+        prev=document.getElementById("AddYoungest1Child").innerText;
+        persons.forEach(x=>{x.name==="en genç kişi"?x.children.push({name:"fgdefgd",lastName:"jklnhdlkgjl"}):x.age=x.age});
+        document.getElementById("AddYoungest1Child").innerText = prev +"\n \n" +"Sonra"+"\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+(x.income)+" "+x.children.toString()).join("\n");
+        
+        //Ödev7
+        document.getElementById("AddIncometoPoor").innerText = "Önce"+ "\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+x.income+" "+x.children.toString()).join("\n");
+        prev=document.getElementById("AddIncometoPoor").innerText;
+        persons.forEach(x=>x.income===0&&x.age>20?x.income=1000000:x.income=x.income);
+        document.getElementById("AddIncometoPoor").innerText = prev +"\n \n" +"Sonra"+"\n"+persons.map(x => x.name+" "+x.lastName+" "+x.age+" "+(x.income)+" "+x.children.toString()).join("\n");
+
+        //Ödev8
+        let sum=0;
+        persons.forEach(element=>{sum+=element.income;});
+        document.getElementById("SumOfIncome").innerText="Maaşların Toplamı: "+ sum;
+
+        //Ödev9
+        let average=0;
+        persons.forEach(element=>{average+=element.income;});
+        average=average/persons.length;
+        document.getElementById("AverageOfIncome").innerText="Maaşların Ortalaması: "+ average;
+        
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
